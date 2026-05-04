@@ -66,7 +66,7 @@ Para obtener una cuenta y los `CredentialGuid` de tus clientes, contacta con el 
 // Program.cs
 builder.Services.AddIQeSignVeriFactuMultiTenant(options =>
 {
-    options.Environment    = IQeSignEnvironment.Production; // o Staging para pruebas
+    options.Environment = IQeSignEnvironment.Production; // o Staging para pruebas
     options.TimeoutSeconds = 30;
 });
 ```
@@ -98,7 +98,7 @@ public class FacturacionMultiTenantService(IQeSignMultiTenantClient multiTenant)
         string credentialGuid, AddDocumentRequest request, CancellationToken ct = default)
     {
         // ForTenant devuelve un TenantClient vinculado al credencial del cliente
-        var tenant   = multiTenant.ForTenant(credentialGuid);
+        var tenant = multiTenant.ForTenant(credentialGuid);
         var response = await tenant.VeriFactu.AddDocumentAsync(request, ct);
 
         if (!response.IsSuccess)
@@ -116,34 +116,34 @@ var tenant = multiTenantClient.ForTenant("credentialGuid-del-cliente");
 
 var response = await tenant.VeriFactu.AddDocumentAsync(new AddDocumentRequest
 {
-    CertificateId   = "id-del-certificado-en-iqportal",
+    CertificateId = "id-del-certificado-en-iqportal",
     CertificatePass = "contraseña-del-pfx",
     File = new VeriFactuDocumentFile
     {
-        Version              = SchemaVersion.V1_0,
-        Type                 = InvoiceType.Factura,           // "F1"
-        Serial               = "FAC",
-        Number               = "2024-001",
-        Date                 = "2024-01-15",
+        Version = SchemaVersion.V1_0,
+        Type = InvoiceType.Factura,           // "F1"
+        Serial = "FAC",
+        Number = "2024-001",
+        Date = "2024-01-15",
         OperationDescription = "Servicios de consultoría",
         Issuer = new IssuerInfo
         {
-            Name   = "Mi Empresa S.L.",
+            Name = "Mi Empresa S.L.",
             CifNif = "B12345678"
         },
-        Name        = "Cliente S.A.",
-        CifNif      = "A98765432",
-        BaseAmount  = 1000.00m,
+        Name = "Cliente S.A.",
+        CifNif = "A98765432",
+        BaseAmount = 1000.00m,
         TotalAmount = 1210.00m,
         VatDetail =
         [
             new VatDetailItem
             {
-                Vat        = VatType.Iva,
-                VatKey     = VatKey.RegimenGeneral,
-                Type       = VatOperationType.SujetaNoExentaSinInversion,
+                Vat = VatType.Iva,
+                VatKey = VatKey.RegimenGeneral,
+                Type = VatOperationType.SujetaNoExentaSinInversion,
                 VatPercent = 21m,
-                VatAmount  = 210.00m,
+                VatAmount = 210.00m,
                 BaseAmount = 1000.00m
             }
         ]
@@ -271,7 +271,7 @@ int activos = multiTenantClient.ActiveTenantCount;
 Todos los métodos devuelven un objeto que hereda de `ApiResponse` con las propiedades `IsSuccess`, `ErrorCode` y `ErrorMessage`.
 
 ```csharp
-var tenant   = multiTenantClient.ForTenant(credentialGuid);
+var tenant = multiTenantClient.ForTenant(credentialGuid);
 var response = await tenant.VeriFactu.CancelDocumentAsync(id, request);
 
 if (!response.IsSuccess)
